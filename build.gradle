@@ -1,0 +1,69 @@
+buildscript {
+  repositories {
+	mavenCentral()
+	maven {
+		name = "GradleRIO"
+		url = "http://dev.imjac.in/maven"
+	}
+  }
+  dependencies {
+    classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '2.0.1'			//Change this line if you wish to Update GradleRIO
+  }
+}
+
+apply plugin: 'GradleRIO'                                 //Apply the GradleRIO plugin
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+gradlerio.robotClass = "org.usfirst.frc.team1294.robot.Robot"   //The class for the main Robot Class. Used in manifest
+gradlerio.team = "1294"                                   //Your FRC team number (e.g. 5333 for team 'Can't C#', or 47 for Chief Delphi)
+//gradlerio.rioIP = "10.53.33.20"                         //Uncomment to specify the IP address of the RIO
+
+
+dependencies {
+	compile files(System.properties['user.home'] + '/wpilib/java/extracted/library/lib/NetworkTables.jar')
+	compile files(System.properties['user.home'] + '/wpilib/java/extracted/library/lib/WPILib.jar')
+}
+
+def robotManifest = {
+  attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
+  attributes 'Robot-Class': gradlerio.robotClass
+  try {
+	  def branch = 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
+	  def revision = 'git rev-list --max-count 1 --timestamp HEAD'.execute().text.trim()
+	  def commitHash = revision.split(' ').last()
+	  def timestamp = revision ? new java.util.Date(java.util.concurrent.TimeUnit.SECONDS.toMillis(revision.split(' ').first() as long)).format("yyyy-MM-dd'T'HH:mm:ssZ") : null
+	  def tag = 'git describe'.execute().text.trim()
+	  def log = 'git log -1'.execute().text.trim()
+	  def author = (log =~ /(?m).*^.*Author: (.*)$/)[0][1]
+	  
+	  attributes 'Git-Branch' : branch
+	  attributes 'Git-Hash' : commitHash
+	  attributes 'Git-Timestamp' : timestamp
+	  attributes 'Git-Tag' : tag
+	  attributes 'Git-Author' : author
+  } catch (Exception ex) {
+   
+  }
+}
+
+jar {
+  baseName = 'FRCUserProgram'
+  from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  manifest robotManifest
+}
+
+task genJavadoc(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+artifacts {
+  archives genJavadoc
+}
+
+task wrapper(type: Wrapper) {
+   gradleVersion = '2.4' //version required
+}
+
