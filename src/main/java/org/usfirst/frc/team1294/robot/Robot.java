@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team1294.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1294.robot.subsystems.ExampleSubsystem;
+
+import org.usfirst.frc.team1294.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1294.robot.utilities.VersionInformation;
 
 /**
@@ -19,7 +19,7 @@ import org.usfirst.frc.team1294.robot.utilities.VersionInformation;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -30,10 +30,14 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
-
-        SmartDashboard.putData(new VersionInformation());
+        
+        VersionInformation vi = new VersionInformation();
+        SmartDashboard.putString("Git-Branch", vi.getBranch());
+        SmartDashboard.putString("Git-Hash", vi.getHash());
+        SmartDashboard.putString("Git-Timestamp", vi.getTimestamp());
+        SmartDashboard.putString("Git-Tag", vi.getTag());
+        SmartDashboard.putString("Git-Author", vi.getAuthor());
+        
     }
 	
 	public void disabledPeriodic() {

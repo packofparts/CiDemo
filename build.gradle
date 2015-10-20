@@ -1,3 +1,10 @@
+import java.io.*
+import groovyx.net.http.HTTPBuilder
+import groovyx.net.http.EncoderRegistry
+import groovyx.net.http.Method;
+import groovyx.net.http.ContentType;
+import groovy.json.JsonSlurper
+
 buildscript {
   repositories {
 	mavenCentral()
@@ -8,7 +15,12 @@ buildscript {
   }
   dependencies {
     classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '2.0.1'			//Change this line if you wish to Update GradleRIO
+    classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.5.2'
   }
+}
+
+plugins {
+  id "org.10ne.rest" version "0.4.0"
 }
 
 apply plugin: 'GradleRIO'                                 //Apply the GradleRIO plugin
@@ -29,6 +41,7 @@ dependencies {
 def robotManifest = {
   attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
   attributes 'Robot-Class': gradlerio.robotClass
+  attributes 'Class-Path': '.'
   try {
 	  def branch = 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
 	  def revision = 'git rev-list --max-count 1 --timestamp HEAD'.execute().text.trim()
@@ -48,11 +61,99 @@ def robotManifest = {
   }
 }
 
+
+def getReleaseJarUrl(tag) {
+	def releaseJarUrl = null;
+	try {
+		def http = new HTTPBuilder("https://api.github.com/repos/FRC-1294/CiDemo/releases")
+		http.request(Method.GET, ContentType.TEXT ) { req ->
+			headers.'User-Agent' = 'johnrlewis@gmail.com'
+			headers.'Accept' = 'application/json'
+		    response.success = { resp, reader ->
+		        def json = new JsonSlurper().parseText(reader.text)
+		        def release = json.find { it.tag_name == tag }
+		        releaseJarUrl = release.assets[0].browser_download_url
+		    }
+		}
+	} catch (Exception ex) {
+		
+	}
+	return releaseJarUrl
+}
+
+def getLatestReleaseJarUrl() {
+	def releaseJarUrl = null;
+	try {
+		def http = new HTTPBuilder("https://api.github.com/repos/FRC-1294/CiDemo/releases/latest")
+		http.request(Method.GET, ContentType.TEXT ) { req ->
+			headers.'User-Agent' = 'johnrlewis@gmail.com'
+			headers.'Accept' = 'application/json'
+		    response.success = { resp, reader ->
+		        def json = new JsonSlurper().parseText(reader.text)
+		        releaseJarUrl = json.assets[0].browser_download_url
+		    }
+		}
+	} catch (Exception ex) {
+		
+	}
+	return releaseJarUrl
+}
+
+def getReleases() {
+	def tags = []
+	try {
+		def http = new HTTPBuilder("https://api.github.com/repos/FRC-1294/CiDemo/releases")
+		http.request(Method.GET, ContentType.TEXT ) { req ->
+			headers.'User-Agent' = 'johnrlewis@gmail.com'
+			headers.'Accept' = 'application/json'
+		    response.success = { resp, reader ->
+		        def json = new JsonSlurper().parseText(reader.text)
+		        json.each { tags.push(it.tag_name) }
+		    }
+		}
+	} catch (Exception ex) {
+		
+	}
+	return tags
+}
+
+
+
+def deployRelease() {
+	def console = System.console()
+	if (console) {
+		console.writer().println()
+		console.writer().println()
+		def deployFromGithub = (console.readLine('Would you like to deploy a release from github? [Yes]')?:true).toBoolean()
+		if (deployFromGithub) {
+			def deployLatest = (console.readLine('Would you like to deploy the latest release? [Yes]')?:true).toBoolean()
+			if (deployLatest) {
+				println getLatestReleaseJarUrl()
+			} else {
+				def tags = getReleases()
+				tags.eachWithIndex { tag, idx ->  println "$idx: $tag" }
+				def tagIndex = (console.readLine('Which release would you like to deploy? [0]')?:0).toInteger()
+				
+				println getReleaseJarUrl(tags[tagIndex])
+			}
+		} else {
+			println('false')
+		}
+		
+	}
+	
+	//println "Blah ${project.jar.archivePath} ${project.gradlerio.deployFile}"
+}
+
+def deployReleaseTask = project.task('deployRelease') << {
+      deployRelease()
+    }
+
 jar {
-  baseName = 'FRCUserProgram'
   from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
   manifest robotManifest
 }
+
 
 task genJavadoc(type: Jar, dependsOn: javadoc) {
   classifier = 'javadoc'
