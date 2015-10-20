@@ -4,6 +4,12 @@ import groovyx.net.http.EncoderRegistry
 import groovyx.net.http.Method;
 import groovyx.net.http.ContentType;
 import groovy.json.JsonSlurper
+import org.apache.commons.io.FilenameUtils;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 buildscript {
   repositories {
@@ -16,6 +22,7 @@ buildscript {
   dependencies {
     classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '2.0.1'			//Change this line if you wish to Update GradleRIO
     classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.5.2'
+    classpath 'commons-io:commons-io:2.4'
   }
 }
 
@@ -61,93 +68,117 @@ def robotManifest = {
   }
 }
 
-
-def getReleaseJarUrl(tag) {
-	def releaseJarUrl = null;
-	try {
-		def http = new HTTPBuilder("https://api.github.com/repos/FRC-1294/CiDemo/releases")
-		http.request(Method.GET, ContentType.TEXT ) { req ->
-			headers.'User-Agent' = 'johnrlewis@gmail.com'
-			headers.'Accept' = 'application/json'
-		    response.success = { resp, reader ->
-		        def json = new JsonSlurper().parseText(reader.text)
-		        def release = json.find { it.tag_name == tag }
-		        releaseJarUrl = release.assets[0].browser_download_url
-		    }
-		}
-	} catch (Exception ex) {
-		
+def downloadReleases() {
+	File folder = new File("$buildDir/releases")
+	folder.mkdirs()
+	def http = new HTTPBuilder("https://api.github.com/repos/FRC-1294/CiDemo/releases")
+	http.request(Method.GET, ContentType.TEXT ) { req ->
+		headers.'User-Agent' = 'johnrlewis@gmail.com'
+		headers.'Accept' = 'application/json'
+	    response.success = { resp, reader ->
+	        def json = new JsonSlurper().parseText(reader.text)
+	        json.each {
+	        	if (it.assets[0] != null) {
+	        		File output = new File("$buildDir/releases/${it.tag_name}.jar")
+	    			def file = new FileOutputStream(output)
+	    			def out = new BufferedOutputStream(file)
+	    			out << new URL(it.assets[0].browser_download_url).openStream()
+	    			out.close()
+        		}
+	        }
+	    }
 	}
-	return releaseJarUrl
 }
 
-def getLatestReleaseJarUrl() {
-	def releaseJarUrl = null;
-	try {
-		def http = new HTTPBuilder("https://api.github.com/repos/FRC-1294/CiDemo/releases/latest")
-		http.request(Method.GET, ContentType.TEXT ) { req ->
-			headers.'User-Agent' = 'johnrlewis@gmail.com'
-			headers.'Accept' = 'application/json'
-		    response.success = { resp, reader ->
-		        def json = new JsonSlurper().parseText(reader.text)
-		        releaseJarUrl = json.assets[0].browser_download_url
-		    }
-		}
-	} catch (Exception ex) {
-		
-	}
-	return releaseJarUrl
+def downloadReleasesTask = project.task('downloadReleases') << {
+      downloadReleases()
 }
-
-def getReleases() {
-	def tags = []
-	try {
-		def http = new HTTPBuilder("https://api.github.com/repos/FRC-1294/CiDemo/releases")
-		http.request(Method.GET, ContentType.TEXT ) { req ->
-			headers.'User-Agent' = 'johnrlewis@gmail.com'
-			headers.'Accept' = 'application/json'
-		    response.success = { resp, reader ->
-		        def json = new JsonSlurper().parseText(reader.text)
-		        json.each { tags.push(it.tag_name) }
-		    }
-		}
-	} catch (Exception ex) {
-		
-	}
-	return tags
-}
-
-
 
 def deployRelease() {
+	File releaseFolder = new File("$buildDir/releases")
+	def releases = releaseFolder.listFiles().sort(false).reverse()
+	
 	def console = System.console()
 	if (console) {
-		console.writer().println()
-		console.writer().println()
-		def deployFromGithub = (console.readLine('Would you like to deploy a release from github? [Yes]')?:true).toBoolean()
-		if (deployFromGithub) {
-			def deployLatest = (console.readLine('Would you like to deploy the latest release? [Yes]')?:true).toBoolean()
-			if (deployLatest) {
-				println getLatestReleaseJarUrl()
-			} else {
-				def tags = getReleases()
-				tags.eachWithIndex { tag, idx ->  println "$idx: $tag" }
-				def tagIndex = (console.readLine('Which release would you like to deploy? [0]')?:0).toInteger()
-				
-				println getReleaseJarUrl(tags[tagIndex])
-			}
-		} else {
-			println('false')
+		console.writer().println("\n\nAvailable Releases:")
+		releases.eachWithIndex { it, i ->
+			console.writer().println("[$i]: ${FilenameUtils.removeExtension(it.getName())}")
 		}
+		def releaseIndex = (console.readLine("Which release would you like to deploy? [0]")?:0).toInteger()
 		
+		def pathFrom = releases[releaseIndex].toPath()
+		def pathTo = Paths.get("${project.jar.archivePath}")
+		
+		def copyOptions = [StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES] as StandardCopyOption[]
+    
+		Files.copy(pathFrom, pathTo, copyOptions)
+		
+		
+		try {
+			def host = "roboRIO-${project.gradlerio.team}.local"
+			println "Attempting to send new code to RoboRIO..."
+	
+		    project.ant.scp(file: "${project.jar.archivePath}",
+		    todir:"lvuser@${host}:${project.gradlerio.deployFile}",
+		    password:"",
+		    port:22,
+		    trust:true)
+		
+		    println "Deploy Successful! Loaded in: ${project.gradlerio.deployFile}"
+		    
+		    println "Attempting to restart the RoboRIO code..."
+		    project.ant.sshexec(host: "${host}",
+		    username:"lvuser",
+		    port:22,
+		    trust:true,
+		    password:"",
+		    command:"/etc/profile.d/natinst-path.sh; /usr/local/frc/bin/frcKillRobot.sh -t -r"
+		    )
+		    println "Robot Code is restarting..."
+		    
+	    } catch (Exception ex) {
+	    	println "RoboRIO not available... Falling back to IP..."
+	    	String ip = project.gradlerio.rioIP
+		    if (ip == "{DEFAULT}") {
+		      String team = project.gradlerio.team
+		      int length = team.length();
+		      if (length < 4)
+		      for (int i = 0; i < 4 - length; i++)
+		      team = "0" + team;
+		
+		      ip = "10." + team.substring(0, 2) + "." + team.substring(2, 4) + ".20"
+		    }
+		    
+		    println "Attempting to send new code to RoboRIO..."
+	
+		    project.ant.scp(file: "${project.jar.archivePath}",
+		    todir:"lvuser@${ip}:${project.gradlerio.deployFile}",
+		    password:"",
+		    port:22,
+		    trust:true)
+		
+		    println "Deploy Successful! Loaded in: ${project.gradlerio.deployFile}"
+		    
+		    println "Attempting to restart the RoboRIO code..."
+		    project.ant.sshexec(host: "${ip}",
+		    username:"lvuser",
+		    port:22,
+		    trust:true,
+		    password:"",
+		    command:"/etc/profile.d/natinst-path.sh; /usr/local/frc/bin/frcKillRobot.sh -t -r"
+		    )
+		    println "Robot Code is restarting..."
+		    
+	    }
 	}
 	
-	//println "Blah ${project.jar.archivePath} ${project.gradlerio.deployFile}"
 }
 
 def deployReleaseTask = project.task('deployRelease') << {
       deployRelease()
-    }
+}
+
+
 
 jar {
   from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }

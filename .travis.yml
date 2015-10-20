@@ -1,12 +1,12 @@
 sudo: false
 language: java
 install: ./gradlew wpi
-script: ./gradlew jar
+script: ./gradlew clean jar
 jdk: oraclejdk8
 deploy:
   provider: releases
   api_key:
     secure: R1YsQIVy+SdDBbJpwLrAdnh5w8Xp4UT2ExsrCLOHbfv1NAq/vPrt8/iIs8o2nj6Z7KY7ZZyDrGoREVVG5WKWCd0rVSMXRD8v+JHSxSRhdYnpc6VyOEB4A2LbQQi4bEal+YzJPTDsyP2fNPQH8srDozcfiJumaF9O/ob8MczSVx/EZCqFgY3Mmk8dMPzguiCU92ibYiajgpDETjRyT+3hsRYsFM4DNMoXPI/1NZJJtZSpyMJQLuz0s54u3GBxjv+d4luTq7S/hyKmsgV7YU3/RSWUnIqCvPqJA301XwLtT2Xm/rPPaI/rybvtiZTczaE9Kmhzop2mW6nFZGVPRnDK8ZuYkE3EM4FYYK7PCGtfeXiOL1UGZiVeoLNWEfMN6VctrIhZjnyqLSLJes0H0lfVdrQiIgS1vSfTsk39lm2JD1Cu9mCgpoXzkuoWCxgPFC8Ys9hShRCOFm7VLzh+aznUxAtHtOtA5CCwgejoP1hIPE+dfYwE69aKL+MXkALAcnNqjqM2nlVu4nB9cSIQ+oimAQntdb80DncXihNsurwoAhmPe2IC+k3n3S52ijWzxpSCmiud7oVPCbqCkTEIJkYED+mg1AZqPlkv+5rjDRxEo25UOWD3EhvNT+WQjbeasmEwBQweyjdBoUSCDCRuCTULdrN5I0izgZ/XFDEHc9ZOuuY=
-  file: build/libs/FRCUserProgram.jar
+  file: build/libs/CiDemo.jar
   on:
     tags: true
