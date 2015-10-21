@@ -1,7 +1,7 @@
 sudo: false
 language: java
 install: ./gradlew wpi
-script: ./gradlew clean jar
+script: ./gradlew clean jar -PciBuild=true
 jdk: oraclejdk8
 deploy:
   provider: releases

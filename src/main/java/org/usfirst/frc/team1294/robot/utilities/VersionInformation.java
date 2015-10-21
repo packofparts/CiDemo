@@ -37,6 +37,10 @@ public class VersionInformation {
 		return getAttribute("Git-Author");
 	}
 	
+	public String getBuildType() {
+		return getAttribute("BuildType");
+	}
+	
 	private Manifest loadManifest() {
 		URLClassLoader cl = (URLClassLoader) VersionInformation.class
 				.getClassLoader();

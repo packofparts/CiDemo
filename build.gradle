@@ -63,9 +63,18 @@ def robotManifest = {
 	  attributes 'Git-Timestamp' : timestamp
 	  attributes 'Git-Tag' : tag
 	  attributes 'Git-Author' : author
+	  
+	  
+	  if (project.hasProperty('ciBuild') && ciBuild.toBoolean()) {
+	  	attributes 'BuildType' : 'Official Release'
+	  } else {
+	  	attributes 'BuildType' : 'Dev/Test Build'
+	  }
+	  
   } catch (Exception ex) {
    
   }
+  
 }
 
 def downloadReleases() {
