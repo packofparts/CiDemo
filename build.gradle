@@ -49,41 +49,33 @@ def robotManifest = {
   attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
   attributes 'Robot-Class': gradlerio.robotClass
   attributes 'Class-Path': '.'
-  try {
-	  def branch = 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
-	  def revision = 'git rev-list --max-count 1 --timestamp HEAD'.execute().text.trim()
-	  def commitHash = revision.split(' ').last()
-	  def timestamp = revision ? new java.util.Date(java.util.concurrent.TimeUnit.SECONDS.toMillis(revision.split(' ').first() as long)).format("yyyy-MM-dd'T'HH:mm:ssZ") : null
-	  def tag = 'git describe'.execute().text.trim()
-	  def log = 'git log -1'.execute().text.trim()
-	  def author = (log =~ /(?m).*^.*Author: (.*)$/)[0][1]
-	  
-	  def status = 'git status'.execute().text.trim()
-	  def uncommitedCode = !status.contains("nothing to commit, working directory clean")
-	  if (uncommitedCode) {
-	  	branch = "uncommited code"
-	  	commitHash = "uncommited code"
-	  	timestamp = "uncommited code"
-	  	tag = "uncommited code"
-	  	author = "uncommited code"
-	  }
-	  
-	  attributes 'Git-Branch' : branch
-	  attributes 'Git-Hash' : commitHash
-	  attributes 'Git-Timestamp' : timestamp
-	  attributes 'Git-Tag' : tag
-	  attributes 'Git-Author' : author  
-	  
-	  if (project.hasProperty('ciBuild') && ciBuild.toBoolean()) {
-	  	attributes 'BuildType' : 'Official Release'
-	  } else {
-	  	attributes 'BuildType' : 'Dev/Test Build'
-	  }
-	  
-  } catch (Exception ex) {
-   
+  
+  def revision = 'git rev-list --max-count 1 --timestamp HEAD'.execute().text.trim()
+  def commitHash = revision.split(' ').last()
+  def timestamp = revision ? new java.util.Date(java.util.concurrent.TimeUnit.SECONDS.toMillis(revision.split(' ').first() as long)).format("yyyy-MM-dd'T'HH:mm:ssZ") : null
+  def tag = 'git describe'.execute().text.trim()
+  def log = 'git log -1'.execute().text.trim()
+  def author = (log =~ /(?m).*^.*Author: (.*)$/)[0][1]
+  
+  def status = 'git status'.execute().text.trim()
+  def uncommitedCode = !status.contains("nothing to commit, working directory clean")
+  if (uncommitedCode) {
+  	commitHash = "uncommited code"
+  	timestamp = "uncommited code"
+  	tag = "uncommited code"
+  	author = "uncommited code"
   }
   
+  attributes 'Git-Hash' : commitHash
+  attributes 'Git-Timestamp' : timestamp
+  attributes 'Git-Tag' : tag
+  attributes 'Git-Author' : author  
+  
+  if (project.hasProperty('ciBuild') && ciBuild.toBoolean()) {
+  	attributes 'BuildType' : 'Official Release'
+  } else {
+  	attributes 'BuildType' : 'Dev/Test Build'
+  }
 }
 
 def downloadReleases() {
