@@ -69,6 +69,7 @@ def robotManifest = {
 }
 
 def downloadReleases() {
+	println "Checking github for releases"
 	File folder = new File("$buildDir/releases")
 	folder.mkdirs()
 	def http = new HTTPBuilder("https://api.github.com/repos/FRC-1294/CiDemo/releases")
@@ -80,10 +81,15 @@ def downloadReleases() {
 	        json.each {
 	        	if (it.assets[0] != null) {
 	        		File output = new File("$buildDir/releases/${it.tag_name}.jar")
-	    			def file = new FileOutputStream(output)
-	    			def out = new BufferedOutputStream(file)
-	    			out << new URL(it.assets[0].browser_download_url).openStream()
-	    			out.close()
+	        		if (output.exists()) { 
+	        			println "Already have ${it.tag_name}, skipping."
+	        		} else {
+	        			println "Downloading ${it.tag_name}"
+		    			def file = new FileOutputStream(output)
+		    			def out = new BufferedOutputStream(file)
+		    			out << new URL(it.assets[0].browser_download_url).openStream()
+		    			out.close()
+	    			}
         		}
 	        }
 	    }
@@ -105,20 +111,13 @@ def deployRelease() {
 			console.writer().println("[$i]: ${FilenameUtils.removeExtension(it.getName())}")
 		}
 		def releaseIndex = (console.readLine("Which release would you like to deploy? [0]")?:0).toInteger()
-		
-		def pathFrom = releases[releaseIndex].toPath()
-		def pathTo = Paths.get("${project.jar.archivePath}")
-		
-		def copyOptions = [StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES] as StandardCopyOption[]
-    
-		Files.copy(pathFrom, pathTo, copyOptions)
-		
+		def releasePath = releases[releaseIndex].toPath()
 		
 		try {
 			def host = "roboRIO-${project.gradlerio.team}.local"
 			println "Attempting to send new code to RoboRIO..."
 	
-		    project.ant.scp(file: "${project.jar.archivePath}",
+		    project.ant.scp(file: "${releasePath}",
 		    todir:"lvuser@${host}:${project.gradlerio.deployFile}",
 		    password:"",
 		    port:22,
@@ -151,7 +150,7 @@ def deployRelease() {
 		    
 		    println "Attempting to send new code to RoboRIO..."
 	
-		    project.ant.scp(file: "${project.jar.archivePath}",
+		    project.ant.scp(file: "${releasePath}",
 		    todir:"lvuser@${ip}:${project.gradlerio.deployFile}",
 		    password:"",
 		    port:22,
