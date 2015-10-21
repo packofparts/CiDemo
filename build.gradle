@@ -58,12 +58,21 @@ def robotManifest = {
 	  def log = 'git log -1'.execute().text.trim()
 	  def author = (log =~ /(?m).*^.*Author: (.*)$/)[0][1]
 	  
+	  def status = 'git status'.execute().text.trim()
+	  def uncommitedCode = !status.contains("nothing to commit, working directory clean")
+	  if (uncommitedCode) {
+	  	branch = "uncommited code"
+	  	commitHash = "uncommited code"
+	  	timestamp = "uncommited code"
+	  	tag = "uncommited code"
+	  	author = "uncommited code"
+	  }
+	  
 	  attributes 'Git-Branch' : branch
 	  attributes 'Git-Hash' : commitHash
 	  attributes 'Git-Timestamp' : timestamp
 	  attributes 'Git-Tag' : tag
-	  attributes 'Git-Author' : author
-	  
+	  attributes 'Git-Author' : author  
 	  
 	  if (project.hasProperty('ciBuild') && ciBuild.toBoolean()) {
 	  	attributes 'BuildType' : 'Official Release'
