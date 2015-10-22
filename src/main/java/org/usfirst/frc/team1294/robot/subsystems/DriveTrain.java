@@ -15,7 +15,6 @@ public class DriveTrain extends Subsystem {
 	private CANTalon rightMotor;
 	
 	private RobotDrive drive;
-	
 
 	public DriveTrain() {
 		super();
