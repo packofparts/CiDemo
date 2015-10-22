@@ -12,6 +12,6 @@ deploy:
       tags: true
   - provider: bintray
     file: bintraydescriptor.json
-    user: JohnRLewis
+    user: johnrudolflewis
     key: 
       secure: "kGEaVV6h8tQLVM+w+uMPN2aQiXaw/9onmIUNO7iZFu554DczdpbDf8gPz5AlABwc5XiF3yUy1c9v5NjA5HOjhhe8KAwR1274KSbA3PRXfLgTvHF/lEV77orKzKbTHIkKL80IOuqWuR10d2W2moMMq/O5vf+8KyOgEo6sy6ZtHmZwheO2mD2UCfYqsNAfhjLPkVpYZW0aOx/YhvQs3ejIN+l99g7Kd3u+ld7q74g74sXYzJCL4tG+gd5eja5N2Wow2SYA+mB1mHQLrExgPZmKVZKnGEU2OjFY7e9aFJESKizJlft+M9endSoXgN3Qoo+frhe4SpAF/ccjXvaJfINoSI4KGDoCFcPhuRDxTAmrJ4+C8eTd9aDiTmhn1lCbJ3dPrPyt8M+GGaXE7aEQaaXCxrYX4f7KYueG/0fSb2esMwmd5LZ8XBWWGi7PZKO4fgbgu0evyYTGY7a9yYu1FDEX5RlntPRJec5BKYpsDHDxbYPvNvlunq+t5qdWihzsrv8nCklb2esFnhXtIeuCLONBpv5OZM/dsry08yPNOMzV79Q1BnjDCf18DDGu8wqBAbIQMKLJ6kgbo7N/3J07ubiIfRx6lgSW697ugsqnw1LT7W/hZ1GUZqEovIsNjrIBbzUYJhOHXQtxTKY8P/EcuZEdAGQmbTywY49HjIBdM6fgkYc="
