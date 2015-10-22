@@ -1,0 +1,22 @@
+/* 
+based on example here: https://github.com/travis-ci/dpl#bintray
+the intent is to auto-generate this file in the gradle build
+right now just hard coding it to see if it works
+*/
+{
+	"package": {
+		"name": "CiDemo",
+		"repo": "FRC-1294",
+		"subject": "johnrudolflewis"
+	},
+	"version": {
+		"name": "0.3.3",
+		"desc": "This is a version",
+		"released": "2015-10-22"
+	},
+	"files":
+		[
+			{"includePattern": "build/libs/CiDemo.jar", "uploadPattern": "CiDemo.jar"}
+		],
+	"publish": true 
+}
