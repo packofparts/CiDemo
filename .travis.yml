@@ -1,7 +1,6 @@
 sudo: false
 language: java
-install: ./gradlew wpi
-script: ./gradlew clean jar -PciBuild=true
+script: ./gradlew wpi clean jar -PciBuild=true
 jdk: oraclejdk8
 deploy:
   - provider: releases
@@ -13,5 +12,5 @@ deploy:
   - provider: bintray
     file: bintraydescriptor.json
     user: johnrudolflewis
-    key: 
-      secure: "kGEaVV6h8tQLVM+w+uMPN2aQiXaw/9onmIUNO7iZFu554DczdpbDf8gPz5AlABwc5XiF3yUy1c9v5NjA5HOjhhe8KAwR1274KSbA3PRXfLgTvHF/lEV77orKzKbTHIkKL80IOuqWuR10d2W2moMMq/O5vf+8KyOgEo6sy6ZtHmZwheO2mD2UCfYqsNAfhjLPkVpYZW0aOx/YhvQs3ejIN+l99g7Kd3u+ld7q74g74sXYzJCL4tG+gd5eja5N2Wow2SYA+mB1mHQLrExgPZmKVZKnGEU2OjFY7e9aFJESKizJlft+M9endSoXgN3Qoo+frhe4SpAF/ccjXvaJfINoSI4KGDoCFcPhuRDxTAmrJ4+C8eTd9aDiTmhn1lCbJ3dPrPyt8M+GGaXE7aEQaaXCxrYX4f7KYueG/0fSb2esMwmd5LZ8XBWWGi7PZKO4fgbgu0evyYTGY7a9yYu1FDEX5RlntPRJec5BKYpsDHDxbYPvNvlunq+t5qdWihzsrv8nCklb2esFnhXtIeuCLONBpv5OZM/dsry08yPNOMzV79Q1BnjDCf18DDGu8wqBAbIQMKLJ6kgbo7N/3J07ubiIfRx6lgSW697ugsqnw1LT7W/hZ1GUZqEovIsNjrIBbzUYJhOHXQtxTKY8P/EcuZEdAGQmbTywY49HjIBdM6fgkYc="
+    key:
+      secure: aket36PP9cgzLCivTo8odlT57kKf5CJZP4RcHA43TGtaCraSDQKpnQoY7xiDz9RiKFYRTNmUWt1wxNlKvcW8F1UnylK02cI5HCKlX+fQ7tbKg470FHNauYNcDPI3czhuoKFtZNysrc3CnXt6pDpAPyYhaORgENJfNpSmVeawtYHF5oO5nRaDIBUksNYrwtKsHw3q3qGCqimwBsFQUCRMfMUcCKqoiY4xZkxrqNYBRYH+2eKSYSgDhO4tSBjgW+3UGGoD1BFc+qY+4/VsTEmNG3pI+IkTHYNSaEWSsj6QJiVldse1Izj2KQy1nDoVxHUeaHVKXEJ9oae5G4kKL93gM2S7q9sXHa8yTLcrs/3QER2sNRc15DfNbGr8DfoCHAfl/cgDJzGd5jMrzgz761ZMK6+c0/TIYMkMKdZQhe53/LNNLyxKH7W4ShfGEt4K/sU5T+Rq4SOPJOT5Mrm0epUvrIbWH2g2GB5XNk8WtNaKcBbwgyhfrTo7yQXVBfg0/fEJcDooLVe0i6VOBPo4xu+g5IKJ1WqIMxzMZXm88iAiq8eyK9Dd1rs1DDzly97i0CFkvfyisXxn1+TP4RP+oICTg7optI7U2J2NNq7kCvMN4V5Tnj69kpt+H/sVEJLnIRBOJ7RsRyG5Dv3Zal7pjrAMFAZIZfY/LnBGKZuPt8RjGhg=
