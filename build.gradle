@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import org.ajoberstar.grgit.*
 
 buildscript {
   repositories {
@@ -23,6 +24,7 @@ buildscript {
     classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '2.0.1'			//Change this line if you wish to Update GradleRIO
     classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.5.2'
     classpath 'commons-io:commons-io:2.4'
+    classpath 'org.ajoberstar:grgit:1.4.1'
   }
 }
 
@@ -39,6 +41,11 @@ gradlerio.robotClass = "org.usfirst.frc.team1294.robot.Robot"   //The class for 
 gradlerio.team = "1294"                                   //Your FRC team number (e.g. 5333 for team 'Can't C#', or 47 for Chief Delphi)
 //gradlerio.rioIP = "10.53.33.20"                         //Uncomment to specify the IP address of the RIO
 
+eclipse {
+	project {
+		natures 'edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature'
+	}
+}
 
 dependencies {
 	compile files(System.properties['user.home'] + '/wpilib/java/extracted/library/lib/NetworkTables.jar')
@@ -50,17 +57,15 @@ def robotManifest = {
   attributes 'Robot-Class': gradlerio.robotClass
   attributes 'Class-Path': '.'
   
-  def revision = 'git rev-list --max-count 1 --timestamp HEAD'.execute().text.trim()
-  def commitHash = revision.split(' ').last()
-  def timestamp = revision ? new java.util.Date(java.util.concurrent.TimeUnit.SECONDS.toMillis(revision.split(' ').first() as long)).format("yyyy-MM-dd'T'HH:mm:ssZ") : null
-  def tag = 'git describe'.execute().text.trim()
-  def log = 'git log -1'.execute().text.trim()
-  def author = (log =~ /(?m).*^.*Author: (.*)$/)[0][1]
+  def grgit=Grgit.open(project.file('.'))
+  def commitHash = grgit.head().id
+  def tag = grgit.describe()
+  def history = grgit.log(maxCommits: 1)
+  def author = "${history.author.name[0]} <${history.author.email[0]}>"
+  def timestamp = new java.util.Date(java.util.concurrent.TimeUnit.SECONDS.toMillis(history.time[0])).format("yyyy-MM-dd'T'HH:mm:ssZ")
   
-  def status = 'git status'.execute().text.trim()
-  def uncommitedCode = !status.contains("nothing to commit, working directory clean")
-  if (uncommitedCode) {
-  	commitHash = "uncommited code"
+  if (!grgit.status().isClean()) {
+  	commitHash += "uncommited code"
   	timestamp = "uncommited code"
   	tag = "uncommited code"
   	author = "uncommited code"
