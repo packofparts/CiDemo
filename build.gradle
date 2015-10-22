@@ -64,11 +64,11 @@ def robotManifest = {
   
   try {
 	  def grgit=Grgit.open(project.file('.'))
-	  def commitHash = grgit.head().id
-	  def tag = grgit.describe()
+	  commitHash = grgit.head().id
+	  tag = grgit.describe()
 	  def history = grgit.log(maxCommits: 1)
-	  def author = "${history.author.name[0]} <${history.author.email[0]}>"
-	  def timestamp = new java.util.Date(java.util.concurrent.TimeUnit.SECONDS.toMillis(history.time[0])).format("yyyy-MM-dd'T'HH:mm:ssZ")
+	  author = "${history.author.name[0]} <${history.author.email[0]}>"
+	  timestamp = new java.util.Date(java.util.concurrent.TimeUnit.SECONDS.toMillis(history.time[0])).format("yyyy-MM-dd'T'HH:mm:ssZ")
 	  
 	  if (!grgit.status().isClean()) {
 	  	commitHash += "uncommited code"
