@@ -93,57 +93,68 @@ def getAuthor() {
   return author
 }
 
+task wrapper(type: Wrapper) {
+   gradleVersion = '2.4' //version required
+}
 
 
 
-/*
 
-import java.io.*
+
+
+import groovy.json.JsonSlurper
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.EncoderRegistry
 import groovyx.net.http.Method;
 import groovyx.net.http.ContentType;
-
 import org.apache.commons.io.FilenameUtils;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import org.ajoberstar.grgit.*
 
-import groovy.json.JsonSlurper
-
-def downloadReleases() {
-	println "Checking bintray for releases"
-	File folder = new File("$buildDir/releases")
-	folder.mkdirs()
+String[] getVersionsFromBintray() {
 	def http = new HTTPBuilder("https://bintray.com/api/v1/packages/johnrudolflewis/FRC-1294/CiDemo")
 	http.request(Method.GET, ContentType.TEXT ) { req ->
 		headers.'Accept' = 'application/json'
 	    response.success = { resp, reader ->
-	        def json = new JsonSlurper().parseText(reader.text)
-	        json.each {
-	        	if (it.assets[0] != null) {
-	        		File output = new File("$buildDir/releases/${it.tag_name}.jar")
-	        		if (output.exists()) { 
-	        			println "Already have ${it.tag_name}, skipping."
-	        		} else {
-	        			println "Downloading ${it.tag_name}"
-		    			def file = new FileOutputStream(output)
-		    			def out = new BufferedOutputStream(file)
-		    			out << new URL(it.assets[0].browser_download_url).openStream()
-		    			out.close()
-	    			}
-        		}
-	        }
+	        def versions = new JsonSlurper().parseText(reader.text).versions
+	        return versions;
 	    }
 	}
 }
 
-def downloadReleasesTask = project.task('downloadReleases') << {
-      downloadReleases()
+String getVersionJarFileDownloadPath(version) {
+	
+	def http = new HTTPBuilder("https://bintray.com/api/v1/packages/johnrudolflewis/FRC-1294/CiDemo/versions/" + version + "/files")
+	http.request(Method.GET, ContentType.TEXT ) { req ->
+		headers.'Accept' = 'application/json'
+	    response.success = { resp, reader ->
+	        def files = new JsonSlurper().parseText(reader.text)
+	        def jarFileIndex = files.findIndexOf { it.path.endsWith('.jar') }
+	        def file = files[jarFileIndex]
+	        return String.format("https://bintray.com/artifact/download/%s/%s/%s", file.owner, file.repo, file.path.replaceAll("\\+", "%2B"))
+	    }
+	}
 }
+
+def downloadFile(url, dest) {
+	def file = new FileOutputStream(dest)
+	def out = new BufferedOutputStream(file)
+	out << new URL(url).openStream()
+	out.close()
+}
+
+def downloadReleasesTask = project.task('downloadReleases') << {
+     String[] versions = getVersionsFromBintray()
+     
+     versions.eachWithIndex{ a,i ->
+     	def dest = new File("$buildDir/releases/${a}.jar")
+     	if (dest.exists()) {
+     		println "Already have ${a}, skipping."
+     	} else {
+     		println "Downloading ${a}"
+     		downloadFile(getVersionJarFileDownloadPath(a), dest);
+     	}
+     }
+}
+
 
 def deployRelease() {
 	File releaseFolder = new File("$buildDir/releases")
@@ -221,10 +232,3 @@ def deployRelease() {
 def deployReleaseTask = project.task('deployRelease') << {
       deployRelease()
 }
-
-*/
-
-task wrapper(type: Wrapper) {
-   gradleVersion = '2.4' //version required
-}
-
