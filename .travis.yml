@@ -1,4 +1,5 @@
 sudo: false
 language: java
-script: ./gradlew wpi clean build bintrayUpload
+-install: ./gradlew wpi
+script: ./gradlew build bintrayUpload
 jdk: oraclejdk8
