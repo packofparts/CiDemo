@@ -17,24 +17,12 @@ public class VersionInformation {
 		this.manifest = loadManifest();
 	}
 	
-	public String getHash() {
-		return getAttribute("Git-Hash");
-	}
-	
-	public String getTimestamp() {
-		return getAttribute("Git-Timestamp");
-	}
-	
-	public String getTag() {
-		return getAttribute("Git-Tag");
+	public String getVersion() {
+		return getAttribute("Version");
 	}
 	
 	public String getAuthor() {
-		return getAttribute("Git-Author");
-	}
-	
-	public String getBuildType() {
-		return getAttribute("BuildType");
+		return getAttribute("Author");
 	}
 	
 	private Manifest loadManifest() {
