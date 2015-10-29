@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team1294.robot.Robot;
+import org.usfirst.frc.team1294.robot.commands.ArcadeDriveWithJoystick;
 import org.usfirst.frc.team1294.robot.commands.TankDriveWithJoystick;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,7 +39,7 @@ public class DriveTrain extends Subsystem {
 	 * using the PS3 joystick.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new TankDriveWithJoystick());
+		setDefaultCommand(new ArcadeDriveWithJoystick());
 	}
 
 	/**
@@ -55,6 +56,9 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void drive(Joystick left, Joystick right) {
 		drive.tankDrive(left, right);
+	}
+	public void arcade(Joystick joystick){
+		drive.arcadeDrive(joystick);
 	}
 
 	

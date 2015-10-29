@@ -49,7 +49,7 @@ def robotManifest = {
   attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
   attributes 'Robot-Class': gradlerio.robotClass
   attributes 'Class-Path': '.'
-  
+  /*
   def revision = 'git rev-list --max-count 1 --timestamp HEAD'.execute().text.trim()
   def commitHash = revision.split(' ').last()
   def timestamp = revision ? new java.util.Date(java.util.concurrent.TimeUnit.SECONDS.toMillis(revision.split(' ').first() as long)).format("yyyy-MM-dd'T'HH:mm:ssZ") : null
@@ -69,7 +69,7 @@ def robotManifest = {
   attributes 'Git-Hash' : commitHash
   attributes 'Git-Timestamp' : timestamp
   attributes 'Git-Tag' : tag
-  attributes 'Git-Author' : author  
+  attributes 'Git-Author' : author */ 
   
   if (project.hasProperty('ciBuild') && ciBuild.toBoolean()) {
   	attributes 'BuildType' : 'Official Release'
