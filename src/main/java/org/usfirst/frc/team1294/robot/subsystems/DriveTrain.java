@@ -27,7 +27,7 @@ public class DriveTrain extends Subsystem {
         setDefaultCommand(new TankDriveWithJoystick());
     }
 
-    // for comparability
+    // for compatibility
     public void drive(Joystick left, Joystick right) {
         drive.tankDrive(left, right);
     }
