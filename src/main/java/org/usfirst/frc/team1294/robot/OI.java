@@ -15,11 +15,11 @@ public class OI {
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
     // number it is.
-    Joystick stickLeft = new Joystick(0);
-    Joystick stickRight = new Joystick(1);
+    Joystick stickLeft = new Joystick(RobotMap.leftJoystick);
+    Joystick stickRight = new Joystick(RobotMap.rightJoystick);
     // Button button = new JoystickButton(stick, buttonNumber);
-    Button startCC = new JoystickButton(stickLeft, 6),
-           stopCC = new JoystickButton(stickLeft, 7);
+    Button startCC = new JoystickButton(stickLeft, RobotMap.startCCButton),
+           stopCC = new JoystickButton(stickLeft, RobotMap.stopCCButton);
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
