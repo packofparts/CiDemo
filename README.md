@@ -1,8 +1,8 @@
 # CiDemo
 
-[![Download](https://api.bintray.com/packages/johnrudolflewis/FRC-1294/CiDemo/images/download.svg)](https://bintray.com/johnrudolflewis/FRC-1294/CiDemo/_latestVersion)
-
 [![Build Status](http://dev.imjac.in/travis/FRC-1294/CiDemo)](https://travis-ci.org/FRC-1294/CiDemo)
+
+[![Download](https://api.bintray.com/packages/johnrudolflewis/FRC-1294/CiDemo/images/download.svg)](https://bintray.com/johnrudolflewis/FRC-1294/CiDemo/_latestVersion)
  
 The purpose of this repo is to test Travis Ci in preparation for this years FRC season
 
