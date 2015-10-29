@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1294.robot.subsystems;
 
 import org.usfirst.frc.team1294.robot.RobotMap;
+import org.usfirst.frc.team1294.robot.commands.ArcadeDriveWithJoystick;
 import org.usfirst.frc.team1294.robot.commands.TankDriveWithJoystick;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -24,12 +25,19 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new TankDriveWithJoystick());
+		setDefaultCommand(new ArcadeDriveWithJoystick());
 	}
 
 	public void drive(Joystick left, Joystick right) {
 		drive.tankDrive(left, right);
 	}
+	public void arcade(Joystick left){
+		drive.arcadeDrive(left);
+	}
 
+	public void arcade(double y, double d) {
+		// TODO Auto-generated method stub
+		drive.arcadeDrive(y, d);
+	}
 	
 }
