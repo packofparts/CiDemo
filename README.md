@@ -1,12 +1,13 @@
 # CiDemo
 
-[![Build Status](https://api.travis-ci.org/FRC-1294/CiDemo.svg?branch=master)](https://travis-ci.org/FRC-1294/CiDemo)
-[![Download](https://api.bintray.com/packages/johnrudolflewis/FRC-1294/CiDemo/images/download.svg) ](https://bintray.com/johnrudolflewis/FRC-1294/CiDemo/_latestVersion)
+[![Build Status](http://dev.imjac.in/travis/FRC-1294/CiDemo)](https://travis-ci.org/FRC-1294/CiDemo)
+
+[![Download](https://api.bintray.com/packages/johnrudolflewis/FRC-1294/CiDemo/images/download.svg)](https://bintray.com/johnrudolflewis/FRC-1294/CiDemo/_latestVersion)
  
-The purpose of this repo is to test Travis Ci in preperation for this years FRC season
+The purpose of this repo is to test Travis Ci in preparation for this years FRC season
 
 # Continuous Integration Builds
-Every time a commit is pushed to github, a travis-ci build is started. At the end of every build, the jar file is uploaded to bintray.
+Every time a commit is pushed to GitHub, a travis-ci build is started. At the end of every build, the jar file is uploaded to Bintray.
 
 You can view the output of the latest build and view the build history [here](https://travis-ci.org/FRC-1294/CiDemo).
 
@@ -21,7 +22,7 @@ While connected to the Internet, from the command line: `gradlew downloadRelease
 Then while connected to the robot, from the command line: `gradlew deployRelease`
 
 ### To build and deploy the code to the robot
-This method is useful when you have a minor change you want to test on the robot before commiting your code to github. The drawback is that your code is not on github. And there is no history of this build preserved on bintray. You work could easily be lost.
+This method is useful when you have a minor change you want to test on the robot before committing your code to GitHub. The drawback is that your code is not on GitHub. And there is no history of this build preserved on Bintray. You work could easily be lost.
 
 While connected to the robot, from the command line: `gradlew deploy`
 
