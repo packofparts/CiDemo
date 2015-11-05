@@ -19,14 +19,14 @@ public class OI {
     
 	Joystick stickRight = new Joystick(1);
 	
-	Button leftButton7 = new JoystickButton(stickLeft, 7);
+	Button leftButton1 = new JoystickButton(stickLeft, 1);
     // Button button = new JoystickButton(stick, buttonNumber);
     
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
     public OI (){
-    	leftButton7.toggleWhenPressed(new ReversedControls());
+    	leftButton1.toggleWhenPressed(new ReversedControls());
     	//stickLeft.
     }
     //// TRIGGERING COMMANDS WITH BUTTONS
