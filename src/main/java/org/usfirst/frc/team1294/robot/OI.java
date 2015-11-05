@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1294.robot.commands.CruiseControlCommand;
+import org.usfirst.frc.team1294.robot.commands.ReversedControls;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,6 +21,9 @@ public class OI {
     // Button button = new JoystickButton(stick, buttonNumber);
     Button startCC = new JoystickButton(stickLeft, RobotMap.startCCButton),
            stopCC = new JoystickButton(stickLeft, RobotMap.stopCCButton);
+
+    Button leftButton1 = new JoystickButton(stickLeft, 1);
+    // Button button = new JoystickButton(stick, buttonNumber);
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
@@ -44,6 +48,7 @@ public class OI {
         Command ccCommand = new CruiseControlCommand(stickLeft.getY(), stickRight.getY(), CruiseControlCommand.DriveType.TANK_DRIVE);
         startCC.whenPressed(ccCommand);
         stopCC.cancelWhenPressed(ccCommand);
+        leftButton1.toggleWhenPressed(new ReversedControls());
     }
 
     public Joystick getStickLeft() {
