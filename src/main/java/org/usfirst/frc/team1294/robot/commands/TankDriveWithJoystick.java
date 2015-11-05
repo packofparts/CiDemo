@@ -19,13 +19,17 @@ public class TankDriveWithJoystick extends Command {
     }
 
     // Called just before this Command runs the first time
+<<<<<<< HEAD
     protected void initialize() {
     	SmartDashboard.putString("Current Command", wm.getMethod());
     }
+=======
+    protected void initialize() {}
+>>>>>>> refs/remotes/origin/master
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.drive(Robot.oi.getStickLeft(), Robot.oi.getStickRight());
+    	Robot.driveTrain.tankDrive(Robot.oi.getStickLeft(), Robot.oi.getStickRight());
     }
 
     // Make this return true when this Command no longer needs to run execute()
