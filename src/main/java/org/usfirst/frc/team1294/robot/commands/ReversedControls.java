@@ -11,7 +11,7 @@ public class ReversedControls extends Command{
 		// TODO Auto-generated constructor stub
 	}
 	protected void execute() {
-    	Robot.driveTrain.arcade(Robot.oi.getStickLeft().getY(), Robot.oi.getStickLeft().getX()*-1);
+    	Robot.driveTrain.arcadeDrive(Robot.oi.getStickLeft().getY(), Robot.oi.getStickLeft().getX()*-1);
     }
 	@Override
 	protected void initialize() {
