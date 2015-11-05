@@ -5,7 +5,9 @@
 package org.usfirst.frc.team1294.robot.commands;
 
 import org.usfirst.frc.team1294.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Have the robot drive tank style using the PS3 Joystick until interrupted.
@@ -16,8 +18,10 @@ public class TankDriveWithJoystick extends Command {
         requires(Robot.driveTrain);
     }
 
-    // Called just before this Command runs the f iirst time
-    protected void initialize() {}
+    // Called just before this Command runs the first time
+    protected void initialize() {
+    	SmartDashboard.putString("Current Command", wm.getMethod());
+    }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
