@@ -11,10 +11,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 public class DriveTrain extends Subsystem {
-	
 	private CANTalon leftMotor;
 	private CANTalon rightMotor;
-	
+
 	private RobotDrive drive;
 
 	public DriveTrain() {
@@ -36,12 +35,9 @@ public class DriveTrain extends Subsystem {
 	public void arcadeDrive(Joystick left){
 		drive.arcadeDrive(left);
 	}
-
-	public void arcadeDrive(double y, double d) {
-		// TODO Auto-generated method stub
-		drive.arcadeDrive(y, d);
-		
+	public void tankDrive(double left, double right) {drive.tankDrive(left, right);}
+	public void arcadeDrive(double forward, double angle) {drive.arcadeDrive(forward, angle);}
+	public void stop() {
+		drive.drive(0, 0);
 	}
-
-	
 }
