@@ -10,12 +10,12 @@ public class ArcadeDriveWithJoystick extends Command{
 		 requires(Robot.driveTrain);
 	}
 	protected void execute() {
-    	Robot.driveTrain.arcadeDrive(Robot.oi.getStickLeft().getY(), Robot.oi.getStickLeft().getX() * -1);
-    }
+    		Robot.driveTrain.arcade(Robot.oi.getStickLeft());
+    	}
 	@Override
 	protected void initialize() {
 
-    }
+    	}
 	@Override
 	protected boolean isFinished() {
 		return false;
