@@ -16,22 +16,13 @@ public class TankDriveWithJoystick extends Command {
         requires(Robot.driveTrain);
     }
 
-<<<<<<< HEAD
-    // Called just before this Command runs the f iirst time
-    protected void initialize() {
-    }
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-        Robot.driveTrain.drive(Robot.oi.getStickLeft(), Robot.oi.getStickRight());
-=======
     // Called just before this Command runs the first time
     protected void initialize() {}
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.driveTrain.tankDrive(Robot.oi.getStickLeft(), Robot.oi.getStickRight());
->>>>>>> master
     }
 
     // Make this return true when this Command no longer needs to run execute()
