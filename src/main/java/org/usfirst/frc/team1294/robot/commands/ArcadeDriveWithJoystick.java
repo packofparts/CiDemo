@@ -10,8 +10,13 @@ public class ArcadeDriveWithJoystick extends Command{
 		 requires(Robot.driveTrain);
 	}
 	protected void execute() {
+<<<<<<< HEAD
     		Robot.driveTrain.arcade(Robot.oi.getStickLeft());
     	}
+=======
+    	Robot.driveTrain.arcadeDrive(Robot.oi.getStickLeft());
+    }
+>>>>>>> master
 	@Override
 	protected void initialize() {
 
