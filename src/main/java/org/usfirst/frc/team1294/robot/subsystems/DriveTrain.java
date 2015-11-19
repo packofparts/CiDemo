@@ -5,6 +5,7 @@ import org.usfirst.frc.team1294.robot.commands.ArcadeDriveWithJoystick;
 import org.usfirst.frc.team1294.robot.commands.TankDriveWithJoystick;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -24,6 +25,11 @@ public class DriveTrain extends Subsystem {
 		drive = new RobotDrive(leftMotor, rightMotor);
 		drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 		drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+		leftMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		double p = 20;
+		double i = 0;
+		double d = 0;
+		leftMotor.setPID(p, i, d);
 	}
 
 	public void initDefaultCommand() {
