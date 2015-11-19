@@ -20,8 +20,8 @@ public class DriveTrain extends Subsystem {
 		super();
 		leftMotor = new CANTalon(RobotMap.leftMotor);
 		rightMotor = new CANTalon(RobotMap.rightMotor);
-		leftMotor.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogEncoder);
-//		leftMotor.setPID(SmartDashboard.getNumber("p", 0), SmartDashboard.getNumber("i", 0), SmartDashboard.getNumber("d", 0));
+		leftMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		leftMotor.setPID(SmartDashboard.getNumber("p", 0), SmartDashboard.getNumber("i", 0), SmartDashboard.getNumber("d", 0));
 		leftMotor.changeControlMode(CANTalon.ControlMode.Speed);
 		drive = new RobotDrive(leftMotor, rightMotor);
 		drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
