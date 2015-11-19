@@ -4,3 +4,7 @@
 .project
 build/
 /bin/
+.idea/
+*.iml
+*.ipr
+*.iws
