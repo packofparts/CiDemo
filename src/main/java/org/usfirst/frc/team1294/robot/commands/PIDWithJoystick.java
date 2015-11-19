@@ -10,7 +10,8 @@ public class PIDWithJoystick extends Command{
 
 	public PIDWithJoystick() {
 		// TODO Auto-generated constructor stub
-		 requires(Robot.driveTrain);
+		super("PIDTalonEncoderCommand");
+		requires(Robot.driveTrain);
 //		distance = 0;
 	}
 	protected void execute() {
