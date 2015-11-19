@@ -1,7 +1,10 @@
 package org.usfirst.frc.team1294.robot;
 
+import org.usfirst.frc.team1294.robot.commands.ReversedControls;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -13,15 +16,18 @@ public class OI {
     // You create one by telling it which joystick it's on and which button
     // number it is.
     Joystick stickLeft = new Joystick(0);
-
-    Joystick stickRight = new Joystick(1);
+    
+	Joystick stickRight = new Joystick(1);
+	
+	Button leftButton1 = new JoystickButton(stickLeft, 1);
     // Button button = new JoystickButton(stick, buttonNumber);
 
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
-    public OI() {
-        //stickLeft.
+    public OI (){
+    	leftButton1.toggleWhenPressed(new ReversedControls());
+    	//stickLeft.
     }
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
