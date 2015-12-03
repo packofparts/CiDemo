@@ -26,9 +26,8 @@ public class DriveTrain extends Subsystem {
 		drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 		drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 		leftTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rightTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		leftTalon.changeControlMode(CANTalon.ControlMode.Position);
-		rightTalon.set(0.5);
+		//rightTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		leftTalon.changeControlMode(CANTalon.ControlMode.Speed);
 		leftTalon.setPID(RobotMap.p, RobotMap.i, RobotMap.d);
 		rightTalon.setPID(RobotMap.p, RobotMap.i, RobotMap.d);
 	}
