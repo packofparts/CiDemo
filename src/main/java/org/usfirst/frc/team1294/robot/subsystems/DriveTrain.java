@@ -28,6 +28,7 @@ public class DriveTrain extends Subsystem {
 		leftTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rightTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		leftTalon.changeControlMode(CANTalon.ControlMode.Position);
+		rightTalon.set(0.5);
 		leftTalon.setPID(RobotMap.p, RobotMap.i, RobotMap.d);
 		rightTalon.setPID(RobotMap.p, RobotMap.i, RobotMap.d);
 	}
