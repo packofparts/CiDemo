@@ -10,4 +10,7 @@ public class RobotMap {
     // following variables to use with your drivetrain subsystem.
     public static int leftTalon = 1;
     public static int rightTalon = 2;
+    public static double p = 20;
+	public static double i = 0;
+	public static double d = 0;
 }
