@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team1294.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -24,6 +25,8 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
 
+    CameraServer server;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -34,6 +37,11 @@ public class Robot extends IterativeRobot {
         VersionInformation vi = new VersionInformation();
         SmartDashboard.putString("Version", vi.getVersion());
         SmartDashboard.putString("Git-Author", vi.getAuthor());
+
+        server = CameraServer.getInstance();
+        server.setQuality(100); // quality on a scale of 0 to 100
+        //the camera name (ex "cam0") can be found through the roborio web interface
+        server.startAutomaticCapture("cam0");
     }
 	
 	public void disabledPeriodic() {
