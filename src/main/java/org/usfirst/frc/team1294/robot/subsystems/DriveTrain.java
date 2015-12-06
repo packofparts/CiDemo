@@ -41,45 +41,17 @@ public class DriveTrain extends Subsystem {
 
 	public void tankDrive(Joystick left, Joystick right) {
 		drive.tankDrive(left, right);
-		
-		SmartDashboard.putNumber("leftEncVelocity", leftTalon.getEncVelocity());
-		SmartDashboard.putNumber("rightEncVelocity", rightTalon.getEncVelocity());
-		SmartDashboard.putNumber("leftCommandedVelocity", leftTalon.get());
-		SmartDashboard.putNumber("rightCommandedVelocity", rightTalon.get());
-		SmartDashboard.putNumber("leftInput", left.getY());
-		SmartDashboard.putNumber("rightInput", right.getY());
+		printDataToSmartDashboard();
 	}
 	
 	public void arcadeDrive(Joystick left){
 		drive.arcadeDrive(left);
-		
-		SmartDashboard.putNumber("leftEncVelocity", leftTalon.getEncVelocity());
-		SmartDashboard.putNumber("leftCommandedVelocity", leftTalon.get());
-		
-		SmartDashboard.putNumber("rightEncVelocity", rightTalon.getEncVelocity());
-		SmartDashboard.putNumber("rightCommandedVelocity", rightTalon.get());
-		
-		SmartDashboard.putNumber("forwardInput", left.getY());
-		SmartDashboard.putNumber("yawInput", left.getX());
-		
-		SmartDashboard.putNumber("distanceLeft", leftTalon.getPosition());
-		SmartDashboard.putNumber("distanceRight", rightTalon.getPosition());
+		printDataToSmartDashboard();
 	}
 
 	public void arcadeDrive(double y, double d) {
 		drive.arcadeDrive(y, d);
-		
-		SmartDashboard.putNumber("leftEncVelocity", leftTalon.getEncVelocity());
-		SmartDashboard.putNumber("leftCommandedVelocity", leftTalon.get());
-		
-		SmartDashboard.putNumber("rightEncVelocity", rightTalon.getEncVelocity());
-		SmartDashboard.putNumber("rightCommandedVelocity", rightTalon.get());
-		
-		SmartDashboard.putNumber("forwardInput", y);
-		SmartDashboard.putNumber("yawInput", d);
-		
-		SmartDashboard.putNumber("distanceLeft", leftTalon.getPosition());
-		SmartDashboard.putNumber("distanceRight", rightTalon.getPosition());
+		printDataToSmartDashboard();
 	}
 	
 	public double getDistanceLeft() {
@@ -92,5 +64,15 @@ public class DriveTrain extends Subsystem {
 	
 	public void stop() {
 		drive.drive(0,0);
+	}
+	
+	private void printDataToSmartDashboard() {
+		SmartDashboard.putNumber("DriveTrain.LeftTalon.EncVelocity", leftTalon.getEncVelocity());
+		SmartDashboard.putNumber("DriveTrain.LeftTalon.Position", leftTalon.getPosition());
+		SmartDashboard.putNumber("DriveTrain.LeftTalon.Get", leftTalon.get());
+		
+		SmartDashboard.putNumber("DriveTrain.RightTalon.EncVelocity", rightTalon.getEncVelocity());
+		SmartDashboard.putNumber("DriveTrain.RightTalon.Position", rightTalon.getPosition());
+		SmartDashboard.putNumber("DriveTrain.RightTalon.Get", rightTalon.get());
 	}
 }
