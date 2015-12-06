@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1294.robot;
 
 import org.usfirst.frc.team1294.robot.commands.DriveDistance;
-import org.usfirst.frc.team1294.robot.commands.ReversedControls;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
