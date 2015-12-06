@@ -11,7 +11,7 @@ public class ArcadeDriveWithJoystick extends Command{
 		 requires(Robot.driveTrain);
 	}
 	protected void execute() {
-    	Robot.driveTrain.arcadeDrive(Robot.oi.getStickLeft());
+		Robot.driveTrain.arcadeDrive(Robot.oi.getStickLeft());
     }
 	@Override
 	protected void initialize() {

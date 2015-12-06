@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1294.robot;
 
+import org.usfirst.frc.team1294.robot.commands.DriveDistanceCommand;
 import org.usfirst.frc.team1294.robot.commands.ReversedControls;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,14 +21,16 @@ public class OI {
 	Joystick stickRight = new Joystick(1);
 	
 	Button leftButton1 = new JoystickButton(stickLeft, 1);
+	Button rightButton1 = new JoystickButton(stickRight, 1);
     // Button button = new JoystickButton(stick, buttonNumber);
     
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
     public OI (){
-    	leftButton1.toggleWhenPressed(new ReversedControls());
-    	//stickLeft.
+    	//leftButton1.toggleWhenPressed(new ReversedControls());
+    	
+    		leftButton1.whenPressed(new DriveDistanceCommand(10000));
     }
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
