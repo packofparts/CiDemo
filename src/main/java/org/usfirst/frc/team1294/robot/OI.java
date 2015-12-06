@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1294.robot;
 
-import org.usfirst.frc.team1294.robot.commands.DriveDistanceCommand;
+import org.usfirst.frc.team1294.robot.commands.DriveDistance;
 import org.usfirst.frc.team1294.robot.commands.ReversedControls;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -30,7 +30,7 @@ public class OI {
     public OI (){
     	//leftButton1.toggleWhenPressed(new ReversedControls());
     	
-    		leftButton1.whenPressed(new DriveDistanceCommand(10000));
+    		leftButton1.whenPressed(new DriveDistance(10000));
     }
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
