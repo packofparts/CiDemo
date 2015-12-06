@@ -6,9 +6,6 @@ import java.net.URLClassLoader;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import edu.wpi.first.wpilibj.NamedSendable;
-import edu.wpi.first.wpilibj.tables.ITable;
-
 public class VersionInformation {
 
 	private Manifest manifest;
