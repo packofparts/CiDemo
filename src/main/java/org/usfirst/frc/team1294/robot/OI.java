@@ -30,7 +30,7 @@ public class OI {
     public OI (){
     	//leftButton1.toggleWhenPressed(new ReversedControls());
     	
-    		leftButton1.whenPressed(new DriveDistance(10000));
+    		leftButton1.whenPressed(new DriveDistance(10000, 0.5));
     }
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of

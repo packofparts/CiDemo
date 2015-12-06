@@ -8,10 +8,12 @@ public class DriveDistance extends Command {
 
 	private double startDistance;
 	private double desiredDistance;
+	private double desiredSpeed;
 
-	public DriveDistance(double distance) {
+	public DriveDistance(double distance, double speed) {
 		requires(Robot.driveTrain);
-		desiredDistance = distance;
+		this.desiredDistance = distance;
+		this.desiredSpeed = speed;
 	}
 	
 	@Override
@@ -21,7 +23,7 @@ public class DriveDistance extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.driveTrain.arcadeDrive(-0.5, 0);
+		Robot.driveTrain.arcadeDrive(-this.desiredSpeed, 0);
 	}
 
 	@Override
@@ -31,13 +33,11 @@ public class DriveDistance extends Command {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected boolean isFinished() {
 		return Robot.driveTrain.getDistanceLeft() - startDistance >= desiredDistance;
 	}
-
 }
