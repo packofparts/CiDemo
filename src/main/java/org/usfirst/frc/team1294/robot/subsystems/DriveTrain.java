@@ -32,6 +32,8 @@ public class DriveTrain extends Subsystem {
 		drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 		drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 		drive.setMaxOutput(2048);
+
+		resetEncoders();
 	}
 
 	public void initDefaultCommand() {
@@ -74,5 +76,10 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("DriveTrain.RightTalon.EncVelocity", rightTalon.getEncVelocity());
 		SmartDashboard.putNumber("DriveTrain.RightTalon.Position", rightTalon.getPosition());
 		SmartDashboard.putNumber("DriveTrain.RightTalon.Get", rightTalon.get());
+	}
+
+	public void resetEncoders() {
+		leftTalon.setPosition(0);
+		rightTalon.setPosition(0);
 	}
 }

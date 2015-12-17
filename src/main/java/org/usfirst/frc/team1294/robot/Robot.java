@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1294.robot.commands.ResetEncoderCommand;
 import org.usfirst.frc.team1294.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1294.robot.utilities.VersionInformation;
 
@@ -34,6 +35,8 @@ public class Robot extends IterativeRobot {
         VersionInformation vi = new VersionInformation();
         SmartDashboard.putString("Version", vi.getVersion());
         SmartDashboard.putString("Git-Author", vi.getAuthor());
+
+        SmartDashboard.putData(new ResetEncoderCommand());
     }
 	
 	public void disabledPeriodic() {
