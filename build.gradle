@@ -31,7 +31,6 @@ apply plugin: 'maven-publish'
 gradlerio.robotClass = "org.usfirst.frc.team1294.robot.Robot"   //The class for the main Robot Class. Used in manifest
 gradlerio.team = "1294"                                   //Your FRC team number (e.g. 5333 for team 'Can't C#', or 47 for Chief Delphi)
 //gradlerio.rioIP = "10.53.33.20"                         //Uncomment to specify the IP address of the RIO
-gradlerio.rioIP = "10.12.94.23"
 
 
 dependencies {
