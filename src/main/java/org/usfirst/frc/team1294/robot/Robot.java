@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1294.robot.utilities.VersionInformation;
 
@@ -25,7 +26,7 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
 
-    CameraServer server;
+    CameraSubsystem camera;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -38,10 +39,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putString("Version", vi.getVersion());
         SmartDashboard.putString("Git-Author", vi.getAuthor());
 
-        server = CameraServer.getInstance();
-        server.setQuality(100); // quality on a scale of 0 to 100
-        // the camera name (ex "cam0") can be found through the roborio web interface
-        server.startAutomaticCapture("cam0");
+        camera = new CameraSubsystem("cam0", 100);
+        camera.startCameraStream();
     }
 	
 	public void disabledPeriodic() {
