@@ -64,7 +64,7 @@ public class CameraSubsystem extends Subsystem {
         cameraServer.startAutomaticCapture(name);
     }
 
-    // getName() is a function defined in SubSystem, so to avoid risk of overriding it I've simply renamed this function
+    // getName() is a function defined in Subsystem, so to avoid risk of overriding it I've simply renamed this function
     public String getCameraName() {
         return name;
     }
