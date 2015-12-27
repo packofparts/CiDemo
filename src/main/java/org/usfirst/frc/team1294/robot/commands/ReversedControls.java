@@ -4,14 +4,14 @@ import org.usfirst.frc.team1294.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArcadeDriveWithJoystick extends Command{
+public class ReversedControls extends Command{
 
-	public ArcadeDriveWithJoystick() {
+	public ReversedControls() {
+		requires(Robot.driveTrain);
 		// TODO Auto-generated constructor stub
-		 requires(Robot.driveTrain);
 	}
 	protected void execute() {
-    	Robot.driveTrain.arcadeDrive(Robot.oi.getStickLeft());
+    	Robot.driveTrain.arcadeDrive(Robot.oi.getStickLeft().getY(), Robot.oi.getStickLeft().getX()*-1);
     }
 	@Override
 	protected void initialize() {
@@ -32,6 +32,7 @@ public class ArcadeDriveWithJoystick extends Command{
 	protected void interrupted() {
 		// TODO Auto-generated method stub
 		end();
+		
 	}
 
 }
