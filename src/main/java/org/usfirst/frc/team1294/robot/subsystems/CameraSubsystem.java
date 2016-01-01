@@ -68,6 +68,20 @@ public class CameraSubsystem extends Subsystem {
     public String getCameraName() {
         return name;
     }
+    
+    /**
+     * <strong>This method is untested and not guaranteed to work.</strong>
+     * <br><br>
+     * Changes the name of the camera used for auto capture.
+     */
+    public void setName(String newName) {
+        this.name = newName;
+        if (cameraServer.isAutoCaptureStarted()) {
+            // the camera has already been started
+            // with the old name, restart it with the new name
+            startCameraStream();
+        }
+    }
 
     public int getQuality() {
         return quality;
