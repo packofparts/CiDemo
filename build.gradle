@@ -7,7 +7,6 @@ buildscript {
 	}
   }
   dependencies {
-    // classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '3.0.2'			//Change this line if you wish to Update GradleRIO
     classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '+'
     classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.5.2'
     classpath 'commons-io:commons-io:2.4'
