@@ -32,12 +32,6 @@ gradlerio.robotClass = "org.usfirst.frc.team1294.robot.Robot"   //The class for 
 gradlerio.team = "1294"                                   //Your FRC team number (e.g. 5333 for team 'Can't C#', or 47 for Chief Delphi)
 //gradlerio.rioIP = "10.53.33.20"                         //Uncomment to specify the IP address of the RIO
 
-
-dependencies {
-	compile files(System.properties['user.home'] + '/wpilib/java/extracted/library/lib/NetworkTables.jar')
-	compile files(System.properties['user.home'] + '/wpilib/java/extracted/library/lib/WPILib.jar')
-}
-
 publishing {
     publications {
         MyPublication(MavenPublication) {
