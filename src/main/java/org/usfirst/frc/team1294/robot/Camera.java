@@ -1,14 +1,13 @@
-package org.usfirst.frc.team1294.robot.subsystems;
+package org.usfirst.frc.team1294.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * A simple {@link Subsystem} to setup and stream a USB camera feed to the DS.
  *
  * @author Austin Jenchi (timtim17)
  */
-public class CameraSubsystem extends Subsystem {
+public class CameraSubsystem {
     private CameraServer cameraServer;
     private String name;
     private int quality;
@@ -68,7 +67,7 @@ public class CameraSubsystem extends Subsystem {
     public String getCameraName() {
         return name;
     }
-    
+
     /**
      * <strong>This method is untested and not guaranteed to work.</strong>
      * <br><br>
@@ -94,10 +93,5 @@ public class CameraSubsystem extends Subsystem {
 
     public boolean isCaptureStarted() {
         return cameraServer.isAutoCaptureStarted();
-    }
-
-    @Override
-    protected void initDefaultCommand() {
-        // setDefaultCommand(Command);
     }
 }
