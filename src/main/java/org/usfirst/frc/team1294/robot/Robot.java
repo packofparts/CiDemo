@@ -24,18 +24,23 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
 
+    Camera camera;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
 		oi = new OI();
-        
+
         VersionInformation vi = new VersionInformation();
         SmartDashboard.putString("Version", vi.getVersion());
         SmartDashboard.putString("Git-Author", vi.getAuthor());
+
+        camera = new Camera("cam0", 100);
+        camera.startCameraStream();
     }
-	
+
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
@@ -54,7 +59,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
 		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
+        // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
@@ -74,7 +79,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
-    
+
     /**
      * This function is called periodically during test mode
      */
