@@ -11,6 +11,9 @@ public class Camera {
     private CameraServer cameraServer;
     private String name;
     private int quality;
+    
+    private static final String DEFAULT_CAMERA_NAME = "cam0";
+    private static final int DEFAULT_CAMERA_QUALITY = 50;
 
     /**
      * Works like {@link #CameraSubsystem(String, int)} but {@code name} is set to {@code "cam0"} and {@code quality} is set to 50.
@@ -18,7 +21,7 @@ public class Camera {
      * @see #CameraSubsystem(String, int)
      */
     public Camera() {
-        this("cam0", 50);
+        this(DEFAULT_CAMERA_NAME);
     }
 
     /**
@@ -27,7 +30,7 @@ public class Camera {
      * @param name The name of the camera in the roboRIO's webdash.
      */
     public Camera(String name) {
-        this(name, 50);
+        this(name, DEFAULT_CAMERA_QUALITY);
     }
 
     /**
@@ -36,7 +39,7 @@ public class Camera {
      * @param quality The quality on a scale from 0 to 100.
      */
     public Camera(int quality) {
-        this("cam0", quality);
+        this(DEFAULT_CAMERA_NAME, quality);
     }
 
     /**
@@ -46,7 +49,6 @@ public class Camera {
      * @param quality The quality on a scale from 0 to 100.
      */
     public Camera(String name, int quality) {
-        super("Camera");
         this.name = name;
         if (quality < 0 || quality > 100) throw new IllegalArgumentException("Invalid camera quality.");
         this.quality = quality;
