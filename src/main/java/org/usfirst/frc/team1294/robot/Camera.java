@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.CameraServer;
  *
  * @author Austin Jenchi (timtim17)
  */
-public class CameraSubsystem {
+public class Camera {
     private CameraServer cameraServer;
     private String name;
     private int quality;
@@ -17,7 +17,7 @@ public class CameraSubsystem {
      *
      * @see #CameraSubsystem(String, int)
      */
-    public CameraSubsystem() {
+    public Camera() {
         this("cam0", 50);
     }
 
@@ -26,7 +26,7 @@ public class CameraSubsystem {
      *
      * @param name The name of the camera in the roboRIO's webdash.
      */
-    public CameraSubsystem(String name) {
+    public Camera(String name) {
         this(name, 50);
     }
 
@@ -35,7 +35,7 @@ public class CameraSubsystem {
      *
      * @param quality The quality on a scale from 0 to 100.
      */
-    public CameraSubsystem(int quality) {
+    public Camera(int quality) {
         this("cam0", quality);
     }
 
@@ -45,7 +45,7 @@ public class CameraSubsystem {
      * @param name The name of the camera in the roboRIO's webdash.
      * @param quality The quality on a scale from 0 to 100.
      */
-    public CameraSubsystem(String name, int quality) {
+    public Camera(String name, int quality) {
         super("Camera");
         this.name = name;
         if (quality < 0 || quality > 100) throw new IllegalArgumentException("Invalid camera quality.");
