@@ -4,3 +4,10 @@ install: true
 script: ./gradlew build
 after_success: ./gradlew bintrayUpload
 jdk: oraclejdk8
+cards:
+  enabled:
+    - "master"
+  colors:
+    background: "#000000"
+    top-border: "#F7E078"
+    passed: "#17c700"
